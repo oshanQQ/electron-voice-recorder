@@ -7,6 +7,9 @@ const createWindow = () => {
     title: "マイアプリ",
   });
 
+  // 開発時のみ有効
+  mainWindow.webContents.openDevTools({ mode: "detach" });
+
   mainWindow.loadFile("index.html");
 };
 
