@@ -1,10 +1,12 @@
 {
   "name": "electron-voice-recorder",
+  "productName": "ernie-voice-recorder",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager ."
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/oshanQQ/electron-voice-recorder#readme",
   "devDependencies": {
-    "electron": "^18.2.3"
+    "electron": "^18.2.3",
+    "electron-packager": "^15.5.1"
   }
 }
