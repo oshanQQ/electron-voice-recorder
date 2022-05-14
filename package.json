@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/oshanQQ/electron-voice-recorder/issues"
   },
-  "homepage": "https://github.com/oshanQQ/electron-voice-recorder#readme"
+  "homepage": "https://github.com/oshanQQ/electron-voice-recorder#readme",
+  "devDependencies": {
+    "electron": "^18.2.3"
+  }
 }
