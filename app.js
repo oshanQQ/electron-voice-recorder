@@ -1,6 +1,71 @@
-const button = document.getElementById("button");
-const text = document.getElementById("text");
+const recordingState = document.getElementById("recordingState");
+const startButton = document.getElementById("startButton");
+const stopButton = document.getElementById("stopButton");
+let isRecording = false;
 
-button.addEventListener("click", async () => {
-  text.textContent = await window.myAPI.openDialog();
+//様々なブラウザでマイクへのアクセス権を取得する
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+
+//audioのみtrue。Web Audio APIが問題なく使えるのであれば、第二引数で指定した関数を実行する
+navigator.getUserMedia(
+  {
+    audio: true,
+    video: false,
+  },
+  successFunc,
+  errorFunc
+);
+
+function successFunc(stream) {
+  var recorder = new MediaRecorder(stream, {
+    mimeType: "video/webm;codecs=vp9",
+  });
+
+  //音を拾い続けるための配列。chunkは塊という意味
+  var chunks = [];
+
+  //集音のイベントを登録する
+  recorder.addEventListener("dataavailable", (ele) => {
+    if (ele.data.size > 0) {
+      chunks.push(ele.data);
+    }
+  });
+
+  // recorder.stopが実行された時のイベント
+  recorder.addEventListener("stop", () => {
+    var dl = document.querySelector("#dl");
+
+    //集音したものから音声データを作成する
+    dl.href = URL.createObjectURL(new Blob(chunks));
+    dl.download = "sample.wav";
+  });
+
+  recorder.start();
+
+  //10秒後に集音を終了する。
+  setTimeout(() => {
+    alert("stop");
+    recorder.stop();
+  }, 10000);
+}
+
+// Web Audio APIが使えなかった時
+function errorFunc(error) {
+  alert("error");
+}
+
+startButton.addEventListener("click", async () => {
+  isRecording = true;
+  console.log("録音を開始しました");
+  recordingState.textContent = "🔴 録音中";
+  startButton.setAttribute("disabled", true);
+  stopButton.removeAttribute("disabled");
+});
+
+stopButton.addEventListener("click", async () => {
+  isRecording = false;
+  console.log("録音を停止しました");
+  recordingState.textContent = "";
+  startButton.removeAttribute("disabled");
+  stopButton.setAttribute("disabled", true);
 });
