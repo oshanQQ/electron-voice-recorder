@@ -1,5 +1,19 @@
 const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const path = require("path");
+const fs = require("fs");
+
+// 起動時、デスクトップに2つのディレクトリを作成する
+const homeDirectory =
+  process.env[process.platform == "win32" ? "USERPROFILE" : "HOME"];
+const desktopDirectory = path.join(homeDirectory, "Desktop");
+const destinationDirectory1 = path.join(desktopDirectory, "1");
+const destinationDirectory2 = path.join(desktopDirectory, "2");
+fs.mkdir(destinationDirectory1, { recursive: true }, (err) => {
+  if (err) throw err;
+});
+fs.mkdir(destinationDirectory2, { recursive: true }, (err) => {
+  if (err) throw err;
+});
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
