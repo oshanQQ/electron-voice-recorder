@@ -22,5 +22,8 @@
   "devDependencies": {
     "electron": "^18.2.3",
     "electron-packager": "^15.5.1"
+  },
+  "dependencies": {
+    "electron-prompt": "^1.7.0"
   }
 }

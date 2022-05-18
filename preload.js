@@ -1,5 +1,5 @@
 const { ipcRenderer, contextBridge } = require("electron");
 
-contextBridge.exposeInMainWorld("myAPI", {
-  openDialog: async () => ipcRenderer.invoke("open-dialog"),
+contextBridge.exposeInMainWorld("voiceRecorder", {
+  openInputDialog: async () => ipcRenderer.invoke("open-input-dialog"),
 });

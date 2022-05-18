@@ -74,6 +74,8 @@ const record = document.querySelector(".record");
 const stop = document.querySelector(".stop");
 const soundClips = document.querySelector(".sound-clips");
 
+const { directory1, directory2 } = window.voiceRecorder.openInputDialog();
+
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
   console.log("getUserMedia supported.");
   navigator.mediaDevices
@@ -127,6 +129,10 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
         const blob = new Blob(chunks, { type: "audio/wav" });
         chunks = [];
+        // const file = new File(blob, "sample.wav", {
+        //   type: "audio/wav",
+        // });
+        // fs.writeFile("sample.wav", file);
         const audioURL = window.URL.createObjectURL(blob);
         audio.src = audioURL;
 
