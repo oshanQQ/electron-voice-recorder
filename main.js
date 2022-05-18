@@ -45,6 +45,11 @@ const inputPrompt = () =>
     })
     .catch(console.error);
 
+const saveFile = (directoryPath, filename, data) => {
+  const firePath = fs.join(directoryPath, filename);
+  fs.writeFileSync(firePath, Buffer(new Uint8Array(data)));
+};
+
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 600,
@@ -55,8 +60,13 @@ const createWindow = () => {
     },
   });
 
-  ipcMain.handle("open-input-dialog", async (_e, _arg) => {
+  ipcMain.handle("open-input-dialog", async (_event, _args) => {
     return inputPrompt();
+  });
+
+  ipcMain.handle("save-wav-file", async (_event, args) => {
+    const { directoryPath, filename, data } = args;
+    return saveFile(directoryPath, filename, data);
   });
 
   mainWindow.webContents.openDevTools({ mode: "detach" });

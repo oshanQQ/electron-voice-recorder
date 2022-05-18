@@ -74,7 +74,8 @@ const record = document.querySelector(".record");
 const stop = document.querySelector(".stop");
 const soundClips = document.querySelector(".sound-clips");
 
-const { directory1, directory2 } = window.voiceRecorder.openInputDialog();
+const { directoryPath1, directoryPath2 } =
+  window.voiceRecorder.openInputDialog();
 
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
   console.log("getUserMedia supported.");
@@ -133,6 +134,19 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         //   type: "audio/wav",
         // });
         // fs.writeFile("sample.wav", file);
+        // const fileReader = new FileReader();
+        // fileReader.onload = () => {
+        window.voiceRecorder.saveWavFile(
+          directoryPath1,
+          "sample.wav",
+          blob.arrayBuffer()
+        );
+        window.voiceRecorder.saveWavFile(
+          directoryPath2,
+          "sample.wav",
+          blob.arrayBuffer()
+        );
+        // };
         const audioURL = window.URL.createObjectURL(blob);
         audio.src = audioURL;
 
